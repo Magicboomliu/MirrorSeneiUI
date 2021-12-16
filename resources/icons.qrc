@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="ico">
+    <file>icon/ms32.ico</file>
+    <file>icon/ms48.ico</file>
+    <file>icon/ms64.ico</file>
+    <file>icon/ms128.ico</file>
+  </qresource>
+</RCC>
