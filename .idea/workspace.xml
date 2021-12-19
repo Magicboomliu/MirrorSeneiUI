@@ -4,42 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb7a554e-8579-456d-9152-3cd3e9ba8c3d" name="默认" comment="">
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/androidTest/java/com/app/mirrorsensei/ExampleInstrumentedTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/java/com/app/mirrorsensei/MainActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/app/src/test/java/com/app/mirrorsensei/ExampleUnitTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MirrorSensei_App/settings.gradle" afterDir="false" />
+    <list default="true" id="bb7a554e-8579-456d-9152-3cd3e9ba8c3d" name="默认" comment="created Mirror Sensei from template app">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +15,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/MirrorSeneiUI$try.coverage" NAME="try Coverage Results" MODIFIED="1639646240557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ui" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\max12345\.android\avd\Pixel_5_API_26.avd]" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -336,6 +302,14 @@
       <option name="presentableId" value="Default" />
       <updated>1639643418064</updated>
     </task>
+    <task id="LOCAL-00001" summary="created Mirror Sensei from template app">
+      <created>1639936361506</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1639936361506</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -377,6 +351,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created Mirror Sensei from template app" />
+    <option name="LAST_COMMIT_MESSAGE" value="created Mirror Sensei from template app" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/resources/icons_rc.py">
