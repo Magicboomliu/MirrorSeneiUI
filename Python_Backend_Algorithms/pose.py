@@ -11,7 +11,6 @@ mp_pose = mp.solutions.pose
 
 
 
-
 class PoseDetector():
     def __init__(self,mode=False,min_detection_confidence=0.5,min_track_confidence=0.5) -> None:
         
