@@ -36,13 +36,10 @@ if __name__ =="__main__":
             #     angles.append(show_predefined_angles(scene_coord,pref_angle))
             # print(angles)
             
-            # # Draw the angles in skeleton
-            # for pref_angle in redefined_angles:
-            #     rendered_image = draw_angles(rendered_image,scene_coord,pixel_coord,h,w,pref_angle)
+            # Draw the angles in skeleton
+            for pref_angle in redefined_angles:
+                rendered_image = draw_angles(rendered_image,scene_coord,pixel_coord,h,w,pref_angle)
             
-
-
-
             cTime = time.time()
             fps = 1 / (cTime - pTime)
             pTime = cTime
