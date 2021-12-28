@@ -1,6 +1,9 @@
 from typing import AsyncGenerator
 import cv2
 import sys
+
+from numpy.core.defchararray import encode
+from numpy.lib.function_base import corrcoef, diff
 sys.path.append("../")
 from pose import PoseDetector
 import numpy as np
@@ -287,14 +290,121 @@ def motion_similarity(p3d1,p3d2):
 
 
 
-if __name__ =="__main__":
+
+def PixelWiseEncoding(p3d1,p3d2):
+    '''
+    p3d1 is the reference
+    p3d2 is the target
+    '''
+    encoded = np.array([0,0,0])
+    scence_coordinate_1 = get_3d(p3d1)
+    scence_coordinate_2 = get_3d(p3d2)
+    if scence_coordinate_1[0]-scence_coordinate_2[0]>0:
+        encoded[0] =1
+    if scence_coordinate_1[1]-scence_coordinate_2[1]>0:
+        encoded[1] =1
+    if scence_coordinate_1[0]-scence_coordinate_2[0]>0:
+        encoded[1] =1
+    return encoded
+
+
+
+# Marker Space Coding
+def SpaceEncoding(marker_id,neighbour_dir,scene_coord=None):
+    '''
+    marker id is the idx for skeleton
+    '''
+    try:
+        reference_coordinate = scene_coord[marker_id]
+        neighbour_ids = neighbour_dir[str(marker_id)]
+        encodes = np.zeros([len(neighbour_ids),3])
+        for i,idx in enumerate(neighbour_ids):
+            cur_neighbour_coord = scene_coord[idx]
+            encode = PixelWiseEncoding(reference_coordinate,cur_neighbour_coord)
+            encodes[i] = encode  
+    except:
+        print("Make sure the marker id is among 11~32!")
+        return
     
+    return encodes
+
+def CorrespondingPixelCost(coord_ref,coord_query,neighbour_dir,idx):
+    encode_ref = SpaceEncoding(idx,neighbour_dir=neighbour_dir,scene_coord=coord_ref)
+    encode_qurey = SpaceEncoding(idx,neighbour_dir=neighbour_dir,scene_coord=coord_query)
+    diff = EncodingDiffer(encode_ref,encode_qurey)
+    return diff
+
+
+# simple cost compuatation
+def EncodingDiffer(encode1,encode2):
+    assert encode1.shape == encode2.shape
+    h,w = encode1.shape
+    total_error = np.sum(np.abs(encode1-encode2))
+    normalized_error = total_error*1.0/(h*w)
+    return normalized_error
+
+# Simple Motion Check
+def MotionInitialCheck(coord_ref,coord_query,neighbour_dir,idx_list):
+    
+    if idx_list ==None or len(idx_list)==0:
+        return 1000
+    if len(coord_ref)==0 or len(coord_query)==0:
+        return 1000
+    
+    total_differ = 0
+    N = len(idx_list)
+    adapative_weight = [1.0/N for i in range(N)]
+    
+    for i, idx in enumerate(idx_list):
+        differ = CorrespondingPixelCost(coord_ref=coord_ref,coord_query=coord_query,neighbour_dir=neighbour_dir,
+                            idx= idx)
+        total_differ += differ * adapative_weight[i]
+    
+    return differ
+
+
+def Status(diff):
+    
+    if 0.1<diff and diff<0.3:
+        mode =1
+    elif diff>=0.3:
+        mode = 2
+    else:
+        mode = 0
+    
+    return mode
+
+def ShowStatus(diff,image_data,h,w):
+    status_dict ={'0':"Correct",'1':"Not accuracy",'2':"Wrong Motion"}
+    test = status_dict[str(Status(diff))]
+    cv2.putText(image_data, test, (int(w*0.90), int(h*0.90)), cv2.FONT_HERSHEY_PLAIN, 2,
+                        (0, 255, 0), 2)
+
+
+neighbour_dir={'12':[14,11,24],'11':[12,23,13],
+                '14':[12,16],'16':[22,18,14],
+                '18':[16,20],'20':[18,16],'22':[16],
+                '13':[11,15],'15':[13,21,17],'21':[15],
+                '17':[15,19],'19':[15,17],
+                '24':[12,23],'23':[24,11],
+                '26':[24,28],'25':[23,27],
+                '28':[26,32,30],'27':[25,29,31],
+                '32':[28,30],'31':[27,29],
+                '30':[28,32],
+                '29':[27,31]}
+
+
+if __name__ =="__main__":
+    idx = SpaceEncoding(19,neighbour_dir)
+
+    
+    # # p1 =[20,0.3,0.2,-0.3,1]
+    # # p2 =[20,0.2,0.8,-0.9,1]
+    # # p3 =[20,0.9,0.8,-0.0,1]
     # p1 =[20,0.3,0.2,-0.3,1]
-    # p2 =[20,0.2,0.8,-0.9,1]
-    # p3 =[20,0.9,0.8,-0.0,1]
-    p1 =[20,0.3,0.2,-0.3,1]
-    p2 =[20,0.6,0.4,-0.6,1]
-    p3 =[20,0.9,0.6,-0.9,1]
-    angle = angle_computation(p1,p2,p3)
-    print(angle)
+    # p2 =[20,0.6,0.4,-0.6,1]
+    # p3 =[20,0.9,0.6,-0.9,1]
+    # angle = angle_computation(p1,p2,p3)
+    # print(angle)
+
     
