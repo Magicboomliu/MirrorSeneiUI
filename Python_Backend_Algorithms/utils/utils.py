@@ -353,7 +353,7 @@ def MotionInitialCheck(coord_ref,coord_query,neighbour_dir,idx_list):
     
     total_differ = 0
     N = len(idx_list)
-    
+
     adapative_weight = [1.0/N for i in range(N)]
     
     for i, idx in enumerate(idx_list):
@@ -365,7 +365,6 @@ def MotionInitialCheck(coord_ref,coord_query,neighbour_dir,idx_list):
 
 
 def Status(diff):
-    
     if 0.1<diff and diff<0.3:
         mode =1
     elif diff>=0.3:
