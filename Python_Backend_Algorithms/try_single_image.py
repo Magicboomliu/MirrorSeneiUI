@@ -18,12 +18,16 @@ if __name__ =="__main__":
     image_data_sample_1 = cv2.imread(sample_image_1)
     image_data_sample_2 = cv2.imread(sample_image_2)
 
+    # Flip or not : For testing
+    image_data_sample_2 = cv2.flip(image_data_sample_2,1)
+
 
     # Get the Image size
     h,c,w = image_data_sample_1.shape
     # image_data_sample_2 = cv2.resize(image_data_sample_2,(c,h),cv2.INTER_AREA)
 
-    image_data_sample_2 = cv2.flip(image_data_sample_2,1)
+    
+   
     # For reference Image data result
     reference_results,h,w = pose_model_1.get_the_landmark(image_data_sample_1)
     # Get pixel(2d), scene(3d) coordinate

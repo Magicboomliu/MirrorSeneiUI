@@ -361,13 +361,13 @@ def MotionInitialCheck(coord_ref,coord_query,neighbour_dir,idx_list):
                             idx= idx)
         total_differ += differ * adapative_weight[i]
     
-    return differ
+    return total_differ
 
 
 def Status(diff):
-    if 0.1<diff and diff<0.3:
+    if 0.05<diff and diff<0.2:
         mode =1
-    elif diff>=0.3:
+    elif diff>=0.2:
         mode = 2
     else:
         mode = 0
@@ -376,9 +376,16 @@ def Status(diff):
 
 def ShowStatus(diff,image_data,h,w):
     status_dict ={'0':"Correct",'1':"Not accuracy",'2':"Wrong Motion"}
-    test = status_dict[str(Status(diff))]
+    status = Status(diff)
+    test = status_dict[str(status)]
+    if status ==0:
+        color = (0,255,0)
+    elif status ==1:
+        color =(255,0,0)
+    elif status ==2:
+        color =(0,0,255)
     cv2.putText(image_data, test, (int(w*0.1), int(h*0.1)), cv2.FONT_HERSHEY_PLAIN, 1,
-                        (0, 255, 0), 1)
+                        color, 1)
     
     return image_data
 
