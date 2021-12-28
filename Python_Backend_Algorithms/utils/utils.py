@@ -353,6 +353,7 @@ def MotionInitialCheck(coord_ref,coord_query,neighbour_dir,idx_list):
     
     total_differ = 0
     N = len(idx_list)
+    
     adapative_weight = [1.0/N for i in range(N)]
     
     for i, idx in enumerate(idx_list):
@@ -377,8 +378,10 @@ def Status(diff):
 def ShowStatus(diff,image_data,h,w):
     status_dict ={'0':"Correct",'1':"Not accuracy",'2':"Wrong Motion"}
     test = status_dict[str(Status(diff))]
-    cv2.putText(image_data, test, (int(w*0.90), int(h*0.90)), cv2.FONT_HERSHEY_PLAIN, 2,
-                        (0, 255, 0), 2)
+    cv2.putText(image_data, test, (int(w*0.1), int(h*0.1)), cv2.FONT_HERSHEY_PLAIN, 1,
+                        (0, 255, 0), 1)
+    
+    return image_data
 
 
 neighbour_dir={'12':[14,11,24],'11':[12,23,13],

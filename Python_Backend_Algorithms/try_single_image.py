@@ -1,7 +1,7 @@
 # Libraries
 import cv2
 from pose import PoseDetector
-from utils.utils import draw_angles,draw_key_points,neighbour_dir,MotionInitialCheck
+from utils.utils import draw_angles,draw_key_points,neighbour_dir,MotionInitialCheck,ShowStatus
 import numpy as np
 
 
@@ -12,7 +12,7 @@ if __name__ =="__main__":
     
     # Image path
     sample_image_1 ="demo_res/yoga/motion1_0.jpg"
-    sample_image_2 ="demo_res/yoga/motion1_1.jpg"
+    sample_image_2 ="demo_res/yoga/motion2_1.jpg"
 
     # image data
     image_data_sample_1 = cv2.imread(sample_image_1)
@@ -42,10 +42,11 @@ if __name__ =="__main__":
 
     diff = MotionInitialCheck(coord_ref=scene_coord_ref,coord_query=scene_coord_q,neighbour_dir=neighbour_dir,
                         idx_list=[11,12,24,23,14,13,26,25,16,15,28,27])
-        
+
+    rendered_image_q = ShowStatus(diff,rendered_image_q,h,w)   
 
 
-    # cv2.imshow("image ref",rendered_image_ref)
-    # cv2.imshow("image query",rendered_image_q)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    cv2.imshow("image ref",rendered_image_ref)
+    cv2.imshow("image query",rendered_image_q)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
