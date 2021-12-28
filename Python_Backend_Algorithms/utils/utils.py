@@ -354,12 +354,12 @@ def MotionInitialCheck(coord_ref,coord_query,neighbour_dir,idx_list):
     total_differ = 0
     N = len(idx_list)
 
-    adapative_weight = [1.0/N for i in range(N)]
+    adaptive_weight = [1.0/N for i in range(N)]
     
     for i, idx in enumerate(idx_list):
         differ = CorrespondingPixelCost(coord_ref=coord_ref,coord_query=coord_query,neighbour_dir=neighbour_dir,
                             idx= idx)
-        total_differ += differ * adapative_weight[i]
+        total_differ += differ * adaptive_weight[i]
     
     return total_differ
 
@@ -404,7 +404,8 @@ neighbour_dir={'12':[14,11,24],'11':[12,23,13],
 
 
 if __name__ =="__main__":
-    idx = SpaceEncoding(19,neighbour_dir)
+    pass
+    
 
     
     # # p1 =[20,0.3,0.2,-0.3,1]

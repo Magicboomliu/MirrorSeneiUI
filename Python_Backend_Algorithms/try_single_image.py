@@ -24,9 +24,6 @@ if __name__ =="__main__":
 
     # Get the Image size
     h,c,w = image_data_sample_1.shape
-    # image_data_sample_2 = cv2.resize(image_data_sample_2,(c,h),cv2.INTER_AREA)
-
-    
    
     # For reference Image data result
     reference_results,h,w = pose_model_1.get_the_landmark(image_data_sample_1)
