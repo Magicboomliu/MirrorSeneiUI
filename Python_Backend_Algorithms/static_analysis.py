@@ -38,7 +38,7 @@ if __name__ =="__main__":
             record_id +=1
             static_mat.append(pixel_coord)
 
-            # Show to Check
+            # Show to Check whether the Static Judgement is work or not
             show_content = "Dynamic"
             if statics_mode ==True:
                 show_content = "Static"
