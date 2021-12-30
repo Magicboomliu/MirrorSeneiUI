@@ -1,13 +1,10 @@
-from typing import AsyncGenerator
+from typing import AsyncGenerator, List
 import cv2
 import sys
-
-from numpy.core.defchararray import encode
-from numpy.lib.function_base import corrcoef, diff
 sys.path.append("../")
 from pose import PoseDetector
 import numpy as np
-
+import math
 from numpy.linalg import norm
 
 def get_2d(pixel_coord_instance):
@@ -388,6 +385,62 @@ def ShowStatus(diff,image_data,h,w):
                         color, 1)
     
     return image_data
+
+def StaticsJudge(pixel_coordinate:List):
+
+    frame_nums = len(pixel_coordinate)
+    reference_frame = pixel_coordinate[-1]
+    
+    # if there is no in last frame
+    if len(reference_frame)==0:
+        if len(pixel_coordinate[-2])==0:
+            return 0.0
+        else:
+            return 10000
+
+    # Skip Faces
+    reference_frame = reference_frame[11:]
+
+    # Get Valid frames
+    valid_frame_nums = 0
+    displacement_total = 0
+
+    for idx,previous in enumerate(pixel_coordinate):
+        # Skip Last frames
+        if idx == frame_nums-1:
+            continue
+        # Make sure there is something at the frame
+        if len(previous)==0:
+            continue
+        # Skip the faces
+        previous = previous[11:]
+        total_displacement_x = 0
+        total_displacement_y =0
+        for sub_id, pixels in enumerate(previous):
+            pre_u,pred_v = get_2d(pixels)
+            ref_u,ref_v = get_2d(reference_frame[sub_id])
+            delta_u, delta_v = abs(pre_u-ref_u),abs(pred_v-ref_v)
+            total_displacement_x+=delta_u
+            total_displacement_y+=delta_v
+        
+        total_displacement_y=total_displacement_y*1.0/22
+        total_displacement_x=total_displacement_x*1.0/22
+        total_displacement = math.sqrt(total_displacement_x**2+total_displacement_y**2)
+        valid_frame_nums = valid_frame_nums + 1   
+        displacement_total +=total_displacement
+    
+    if valid_frame_nums==0:
+        return 1000
+    
+    displacement_total = displacement_total*1.0/valid_frame_nums
+
+    if displacement_total>0.9:
+        return False
+    else:
+        return True
+ 
+        
+
 
 
 neighbour_dir={'12':[14,11,24],'11':[12,23,13],
