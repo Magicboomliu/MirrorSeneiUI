@@ -1189,9 +1189,15 @@ public final class utilmax {
     /** File */
     public static File FILE_DIR;
     public static File CACHE_DIR;
+    private enum APP_FILE_LIST {userList}
+    private enum FILE_STRUCTURE_USERLIST {userName, userPassword}
+    private enum FILE_STRUCTURE_USER {userName, userAge, userGender, learningTarget, currLevel,
+                                    totalLearningDays, subjectCategory, initialLevel, progress}
+    private enum CACHE_STRUCTURE_MOTION {userName, frameTime, isCorrect, differ, motionSkeletonGT}
     private static void init_File(){
         FILE_DIR = APP_CONTEXT.getFilesDir();
         CACHE_DIR = APP_CONTEXT.getCacheDir();
+//        APP_FILE_LIST.values().
     }
     public static File makeFile(String path, String filename){
         return new File(path,filename);
