@@ -3,6 +3,7 @@ package com.app.mirrorsensei.UtilMax;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
@@ -16,6 +17,7 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,12 @@ import com.google.android.material.snackbar.Snackbar;
 //import com.max.memo3.R;
 //import com.max.memo3.TestSubject.Test7_Background;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Calendar;
@@ -55,10 +63,6 @@ import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.fragment.app.FragmentActivity;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
-import androidx.work.Worker;
 //import io.realm.Realm;
 //import io.realm.RealmConfiguration;
 
@@ -105,6 +109,8 @@ public final class utilmax {
 //            init_Firestore();
             init_Service();
             init_Network();
+            init_File();
+            init_Preferences();
 
 //            init_Sensor();
             isInited = true;
@@ -1179,7 +1185,121 @@ public final class utilmax {
 //        NetworkInfo info = networkConnectManager.getActiveNetworkInfo();
 //        if ()
 //    }
-    
+
+    /** File */
+    public static File FILE_DIR;
+    public static File CACHE_DIR;
+    private enum APP_FILE_LIST {userList}
+    private enum FILE_STRUCTURE_USERLIST {userName, userPassword}
+    private enum FILE_STRUCTURE_USER {userName, userAge, userGender, learningTarget, currLevel,
+                                    totalLearningDays, subjectCategory, initialLevel, progress}
+    private enum CACHE_STRUCTURE_MOTION {userName, frameTime, isCorrect, differ, motionSkeletonGT}
+    private static void init_File(){
+        FILE_DIR = APP_CONTEXT.getFilesDir();
+        CACHE_DIR = APP_CONTEXT.getCacheDir();
+//        APP_FILE_LIST.values().
+    }
+    public static File makeFile(String path, String filename){
+        return new File(path,filename);
+    }
+    public static File makeFile(File path, String filename){
+        return new File(path,filename);
+    }
+    public static File makeFile(String filename){
+        return makeFile(FILE_DIR,filename);
+    }
+    public static boolean createFile(String path, String filename){
+        try {
+            return makeFile(path,filename).createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean createFile(File path, String filename){
+        try {
+            return makeFile(path,filename).createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean createFile(String filename){
+        try {
+            return makeFile(filename).createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean createFile(File file){
+        try {
+            return file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static File createCacheFile(String filename){
+        try {
+            File file = makeFile(CACHE_DIR,filename);
+            if (file.isFile()){
+                return file;
+            } else {
+                return File.createTempFile(filename, null, CACHE_DIR);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static boolean deleteCacheFile(File file){
+        if (!file.isFile()){return false;}
+        if (!file.getAbsolutePath().contains("cache")){return false;}
+        return file.delete();
+    }
+    public static void writeFileTemplate(File file, String content){
+        if (!file.isFile()) {return;}
+
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(content);
+            writer.flush();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static String readFileTemplate(File file){
+        if (!file.isFile()){return null;}
+
+        StringBuilder out = new StringBuilder();
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null){
+                out.append(line).append("\n");
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return out.toString();
+    }
+    public static String[] listFile(){
+        return APP_CONTEXT.fileList();
+    }
+
+    /** Preferences */
+    public static SharedPreferences PREF;
+    private static void init_Preferences(){
+        PREF = PreferenceManager.getDefaultSharedPreferences(APP_CONTEXT);
+    }
+    public static void prefTemplate(){
+        PREF.edit().putInt("prefTemp",123456).apply();
+        log(PREF.getInt("prefTemp",10));
+    }
 
     /** DEVICE DATA */
     public static void getDevice_DeviceData() {
