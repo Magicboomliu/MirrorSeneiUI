@@ -31,6 +31,8 @@ import android.widget.Toast;
 //import com.google.android.gms.tasks.OnCompleteListener;
 //import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 //import com.google.firebase.auth.AuthCredential;
 //import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseUser;
@@ -47,11 +49,13 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -76,12 +80,12 @@ public final class utilmax {
     public static FragmentActivity CURR_ACTIVITY;   //fragment act || act
     public static Context CURR_CONTEXT;
     public static View CURR_VIEW;  //view || view group
-    private static boolean AppContextseted = false;
+    private static boolean AppContextSeted = false;
 
     public static void setAppContext(Context context) {
-        if (!AppContextseted) {
+        if (!AppContextSeted) {
             APP_CONTEXT = context;
-            AppContextseted = true;
+            AppContextSeted = true;
         }
     }
 
@@ -93,26 +97,37 @@ public final class utilmax {
 
     /** LIFECYCLE */
     private static boolean isInited = false;
+    public static boolean getIsInited(){return isInited;}
 
     public static void INIT() {
         if (isInited) {
             return;
         } else {
+            //Toast no init
+            //Log no init
+            //Toast + Log no init
+            //Snackbar no init
 //            init_Notification();
             init_Vibrator();
-            init_Camera();
+            //Scheduler no init
 //            init_WorkManager();
+            //Calendar + Time no init
+            init_Camera();
+            //Thread no init
+            //Easy Data Transfer no init
 //            init_LocalBroadcastReceiver();
 //            init_Realm();
 //            init_Google();
 //            init_Firebase();
 //            init_Firestore();
             init_Service();
+            //Glide, Alert Dialog, Sensor not implemented
             init_Network();
             init_File();
             init_Preferences();
+            //Sharing no init
+            //Device Data no init
 
-//            init_Sensor();
             isInited = true;
         }
     }
@@ -1186,18 +1201,12 @@ public final class utilmax {
 //        if ()
 //    }
 
-    /** File */
+    /** FILE */
     public static File FILE_DIR;
     public static File CACHE_DIR;
-    private enum APP_FILE_LIST {userList}
-    private enum FILE_STRUCTURE_USERLIST {userName, userPassword}
-    private enum FILE_STRUCTURE_USER {userName, userAge, userGender, learningTarget, currLevel,
-                                    totalLearningDays, subjectCategory, initialLevel, progress}
-    private enum CACHE_STRUCTURE_MOTION {userName, frameTime, isCorrect, differ, motionSkeletonGT}
     private static void init_File(){
         FILE_DIR = APP_CONTEXT.getFilesDir();
         CACHE_DIR = APP_CONTEXT.getCacheDir();
-//        APP_FILE_LIST.values().
     }
     public static File makeFile(String path, String filename){
         return new File(path,filename);
@@ -1255,8 +1264,29 @@ public final class utilmax {
     }
     public static boolean deleteCacheFile(File file){
         if (!file.isFile()){return false;}
-        if (!file.getAbsolutePath().contains("cache")){return false;}
+        if (!file.getAbsolutePath().contains(CACHE_DIR.getAbsolutePath())){return false;}
         return file.delete();
+    }
+    public static <T> void saveFileJSONClass(File filePath, T classObject){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(
+                    makeFile(new StringBuilder(filePath.getName()).append(".json").toString())));
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(classObject));
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static <T> T loadFileJSONClass(File filePath, Class<T> theClass){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(
+                    makeFile(new StringBuilder(filePath.getName()).append(".json").toString())));
+            return new Gson().fromJson(reader,theClass);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     public static void writeFileTemplate(File file, String content){
         if (!file.isFile()) {return;}
@@ -1266,7 +1296,6 @@ public final class utilmax {
             writer.write(content);
             writer.flush();
             writer.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1291,14 +1320,29 @@ public final class utilmax {
         return APP_CONTEXT.fileList();
     }
 
-    /** Preferences */
+    /** PREFERENCES */
     public static SharedPreferences PREF;
     private static void init_Preferences(){
         PREF = PreferenceManager.getDefaultSharedPreferences(APP_CONTEXT);
     }
     public static void prefTemplate(){
-        PREF.edit().putInt("prefTemp",123456).apply();
+        PREF.edit().putInt("prefTemp",123456)
+                .apply();
         log(PREF.getInt("prefTemp",10));
+    }
+
+    /** SHARING */
+    //https://developer.android.com/training/sharing/send
+    public static Intent getSharingIntent(){return new Intent(Intent.ACTION_SEND);}
+    public static void startSharingSharesheet(Intent send, String title){
+        CURR_ACTIVITY.startActivity(Intent.createChooser(send,title));
+    }
+    public static void sharingTemplate(){
+        Intent intent = getSharingIntent();
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "actual content");
+        intent.putExtra(Intent.EXTRA_TITLE,"title in sharesheet");
+        startSharingSharesheet(intent,"title of the sharing action");
     }
 
     /** DEVICE DATA */

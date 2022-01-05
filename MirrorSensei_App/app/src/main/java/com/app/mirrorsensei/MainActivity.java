@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.app.mirrorsensei.UtilMax.utilmax;
+import com.app.mirrorsensei.UtilMax.utilmaxMS;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         utilmax.setAppContext(getApplicationContext());
         utilmax.setCurrActivity(this);
         utilmax.INIT();
+        utilmaxMS.INIT_MS();
 
         //set button to max test activity
         findViewById(R.id.button_to_maxtestactivity).setOnClickListener(view -> {

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mirror Sensei</string>
+    <string name="currUser">Current Sign In ed User</string>
 </resources>
