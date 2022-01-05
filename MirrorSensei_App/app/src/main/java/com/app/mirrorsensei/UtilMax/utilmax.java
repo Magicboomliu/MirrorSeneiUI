@@ -31,6 +31,8 @@ import android.widget.Toast;
 //import com.google.android.gms.tasks.OnCompleteListener;
 //import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 //import com.google.firebase.auth.AuthCredential;
 //import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +49,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -77,12 +80,12 @@ public final class utilmax {
     public static FragmentActivity CURR_ACTIVITY;   //fragment act || act
     public static Context CURR_CONTEXT;
     public static View CURR_VIEW;  //view || view group
-    private static boolean AppContextseted = false;
+    private static boolean AppContextSeted = false;
 
     public static void setAppContext(Context context) {
-        if (!AppContextseted) {
+        if (!AppContextSeted) {
             APP_CONTEXT = context;
-            AppContextseted = true;
+            AppContextSeted = true;
         }
     }
 
@@ -94,6 +97,7 @@ public final class utilmax {
 
     /** LIFECYCLE */
     private static boolean isInited = false;
+    public static boolean getIsInited(){return isInited;}
 
     public static void INIT() {
         if (isInited) {
@@ -1197,25 +1201,12 @@ public final class utilmax {
 //        if ()
 //    }
 
-    /** File */
+    /** FILE */
     public static File FILE_DIR;
     public static File CACHE_DIR;
-    public enum APP_FILE_LIST {
-        userList;
-        public File getAppFile(){return makeFile(this.name());}
-    }
-    public enum FILE_STRUCTURE_USERLIST {userName, userPassword}
-    public enum FILE_STRUCTURE_USER {userName, userAge, userGender, learningTarget, currLevel,
-                                    totalLearningDays, subjectCategory, initialLevel, progress}
-    public enum CACHE_STRUCTURE_MOTION {userName, frameTime, isCorrect, differ, motionSkeletonGT}
     private static void init_File(){
         FILE_DIR = APP_CONTEXT.getFilesDir();
         CACHE_DIR = APP_CONTEXT.getCacheDir();
-        Arrays.stream(APP_FILE_LIST.values()).forEach(app_file_list -> {
-            String filename = app_file_list.name();
-//            log(filename);
-            createFile(filename);
-        });
     }
     public static File makeFile(String path, String filename){
         return new File(path,filename);
@@ -1273,8 +1264,29 @@ public final class utilmax {
     }
     public static boolean deleteCacheFile(File file){
         if (!file.isFile()){return false;}
-        if (!file.getAbsolutePath().contains("cache")){return false;}
+        if (!file.getAbsolutePath().contains(CACHE_DIR.getAbsolutePath())){return false;}
         return file.delete();
+    }
+    public static <T> void saveFileJSONClass(File filePath, T classObject){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(
+                    makeFile(new StringBuilder(filePath.getName()).append(".json").toString())));
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(classObject));
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static <T> T loadFileJSONClass(File filePath, Class<T> theClass){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(
+                    makeFile(new StringBuilder(filePath.getName()).append(".json").toString())));
+            return new Gson().fromJson(reader,theClass);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     public static void writeFileTemplate(File file, String content){
         if (!file.isFile()) {return;}
@@ -1284,7 +1296,6 @@ public final class utilmax {
             writer.write(content);
             writer.flush();
             writer.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1309,17 +1320,18 @@ public final class utilmax {
         return APP_CONTEXT.fileList();
     }
 
-    /** Preferences */
+    /** PREFERENCES */
     public static SharedPreferences PREF;
     private static void init_Preferences(){
         PREF = PreferenceManager.getDefaultSharedPreferences(APP_CONTEXT);
     }
     public static void prefTemplate(){
-        PREF.edit().putInt("prefTemp",123456).apply();
+        PREF.edit().putInt("prefTemp",123456)
+                .apply();
         log(PREF.getInt("prefTemp",10));
     }
 
-    /** Sharing */
+    /** SHARING */
     //https://developer.android.com/training/sharing/send
     public static Intent getSharingIntent(){return new Intent(Intent.ACTION_SEND);}
     public static void startSharingSharesheet(Intent send, String title){
