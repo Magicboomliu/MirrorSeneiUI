@@ -31,7 +31,7 @@ public class MaxActivityTest extends AppCompatActivity {
 //            testCreateFile();
 //            testSharing();
 //            Arrays.stream(utilmax.listFile()).forEach(s -> utilmax.log(s));
-//            testAC();
+//            testAC(); Maxyyyyyy
             testJSON();
 //            testClass();
         });
