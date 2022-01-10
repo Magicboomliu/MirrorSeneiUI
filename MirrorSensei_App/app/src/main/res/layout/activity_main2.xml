@@ -180,4 +180,14 @@
         app:srcCompat="?attr/actionModeShareDrawable"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="102dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="34dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/mirror_logo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
