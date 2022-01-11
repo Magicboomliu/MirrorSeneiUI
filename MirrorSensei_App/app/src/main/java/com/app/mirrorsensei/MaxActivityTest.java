@@ -44,7 +44,7 @@ public class MaxActivityTest extends AppCompatActivity {
         utilmax.setCurrActivity(this);
 
         //Camera test
-        testCameraOnStart();
+//        testCameraOnStart();
 
         //set button onClick
         findViewById(R.id.maxtestactivity_button1).setOnClickListener(v -> {
@@ -57,33 +57,33 @@ public class MaxActivityTest extends AppCompatActivity {
 //            testAC();
 //            testJSON();
 //            testClass();
-            testCamera();
+//            testCamera();
         });
         findViewById(R.id.maxtestactivity_start).setOnClickListener(v -> {
-            if (cameraProvider != null){
-                testCameraBindPreview(cameraProvider);
-            }
+//            if (cameraProvider != null){
+//                testCameraBindPreview(cameraProvider);
+//            }
         });
         findViewById(R.id.maxtestactivity_stop).setOnClickListener(v -> {
-            cameraProvider.unbindAll();
+//            cameraProvider.unbindAll();
         });
         findViewById(R.id.maxtestactivity_enable).setOnClickListener(v -> {
-            utilmax.log("start analyzing");
-            isImageTaken = false;
-            imageAnalysis.setAnalyzer(executorService, imageProxy -> {
-//                if (!isImageTaken) {
-                    utilmax.log("image taken");
-                    utilmax.log("height" + imageProxy.getHeight());
-                    utilmax.log("width" + imageProxy.getWidth());
-                    utilmax.log("rotation angle" + imageProxy.getImageInfo().getRotationDegrees());
-                    isImageTaken = true;
-//                }
-                imageProxy.close();
-            });
+//            utilmax.log("start analyzing");
+//            isImageTaken = false;
+//            imageAnalysis.setAnalyzer(executorService, imageProxy -> {
+////                if (!isImageTaken) {
+//                    utilmax.log("image taken");
+//                    utilmax.log("height" + imageProxy.getHeight());
+//                    utilmax.log("width" + imageProxy.getWidth());
+//                    utilmax.log("rotation angle" + imageProxy.getImageInfo().getRotationDegrees());
+//                    isImageTaken = true;
+////                }
+//                imageProxy.close();
+//            });
         });
         findViewById(R.id.maxtestactivity_disable).setOnClickListener(v -> {
-            imageAnalysis.clearAnalyzer();
-            utilmax.log("clear analyzer");
+//            imageAnalysis.clearAnalyzer();
+//            utilmax.log("clear analyzer");
         });
     }
 
@@ -99,8 +99,8 @@ public class MaxActivityTest extends AppCompatActivity {
         }
         imageAnalysis = new ImageAnalysis.Builder()
                 .setTargetResolution(new Size(720,1280))
-                .setOutputImageRotationEnabled(true)
-                .setTargetRotation(Surface.ROTATION_0)
+//                .setOutputImageRotationEnabled(true)
+//                .setTargetRotation(Surface.ROTATION_0)
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build();
 //        executorService = Executors.newFixedThreadPool(2);
@@ -131,6 +131,7 @@ public class MaxActivityTest extends AppCompatActivity {
                 .build();
         preview.setSurfaceProvider(binding.maxtestactivityPreviewView.getSurfaceProvider());
         cameraProvider.bindToLifecycle(this,cameraSelector,preview,imageAnalysis);
+//        cameraProvider.bindToLifecycle(this,cameraSelector,imageAnalysis);
     }
 
     private void testClass(){
