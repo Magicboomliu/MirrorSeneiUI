@@ -826,7 +826,8 @@ public final class utilmax {
     }
 
     /** CAMERA + FLASH */
-    //TODO camera
+    //camera permission includes flashlight permission
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 14;
     private static CameraManager cameraManager;
     private static String flashlightID;
     private static boolean flashOnNow = false;
@@ -837,7 +838,7 @@ public final class utilmax {
             if (APP_CONTEXT.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                 flashlightID = cameraManager.getCameraIdList()[0];
             } else {
-                makeToast("no flashlight on this device");
+                log("no flashlight on this device");
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -1398,7 +1399,7 @@ public final class utilmax {
             int ipAdr = wifiInfo.getIpAddress();    //local ip only
             String ip = String.format("IP Adrress : %02d.%02d.%02d.%02d", (ipAdr >> 0) & 0xff, (ipAdr >> 8) & 0xff, (ipAdr >> 16) & 0xff, (ipAdr >> 24) & 0xff);
             log(ip);
-            log("MAC addr " + wifiInfo.getMacAddress());
+//            log("MAC addr " + wifiInfo.getMacAddress());
             log("Link speed " + wifiInfo.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
             log("Network ID " + wifiInfo.getNetworkId());
             log("Signal level " + WifiManager.calculateSignalLevel(wifiInfo.getRssi(), 1000));
