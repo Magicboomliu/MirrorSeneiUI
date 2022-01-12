@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MirrorSensei">
         <activity
-            android:name=".MainActivity3"
+            android:name=".ActivityMotionAnalysis"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".MainFrontPage"
             android:exported="false" />
         <activity
             android:name=".MaxActivityTest"

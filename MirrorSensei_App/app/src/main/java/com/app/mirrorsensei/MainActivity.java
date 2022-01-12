@@ -27,5 +27,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this,MaxActivityTest.class);
             startActivity(intent);
         });
+        findViewById(R.id.button_to_frontpage).setOnClickListener(view -> {
+            startActivity(new Intent(this,MainFrontPage.class));
+        });
     }
 }
