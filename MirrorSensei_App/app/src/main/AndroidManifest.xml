@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app.mirrorsensei">
 
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -12,9 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MirrorSensei">
         <activity
-            android:name=".MaxActivityTest"
-            android:parentActivityName=".MainActivity"
+            android:name=".MainActivity3"
             android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".MaxActivityTest"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -3,8 +3,7 @@ plugins {
 }
 
 android {
-    compileSdk 30
-
+    compileSdk 31
     defaultConfig {
         applicationId "com.app.mirrorsensei"
         minSdk 26
@@ -21,6 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        compose true
+        dataBinding true
+        viewBinding true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,6 +37,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.work:work-runtime:2.5.0'
+    implementation 'androidx.camera:camera-core:1.1.0-alpha11'
+    implementation "androidx.camera:camera-camera2:1.1.0-alpha11"
+    implementation "androidx.camera:camera-lifecycle:1.1.0-alpha11"
+    implementation "androidx.camera:camera-view:1.0.0-alpha31"
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha31"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

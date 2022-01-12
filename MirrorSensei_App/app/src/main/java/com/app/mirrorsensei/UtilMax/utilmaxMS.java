@@ -24,7 +24,7 @@ public final class utilmaxMS {
             return;
         } else {
             init_File();
-            initAccount();
+            init_Account();
 
             isInited = true;
         }
@@ -80,7 +80,7 @@ public final class utilmaxMS {
 
     /** ACCOUNT */
     public static String currUser;
-    public static void initAccount(){
+    public static void init_Account(){
         currUser = utilmax.PREF.getString(utilmax.APP_CONTEXT.getResources().getString(R.string.currUser),null);
     }
     public static String accountSignIn(String name, String pwd){
@@ -125,4 +125,7 @@ public final class utilmaxMS {
         if (currUser == null){return null;}
         return loadUserFile(currUser);
     }
+
+    /** CAMERA */
+
 }
