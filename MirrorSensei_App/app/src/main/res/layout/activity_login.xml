@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background">
+    <!--
     tools:context=".LoginActivity">
 
     <TextView
@@ -153,5 +154,5 @@
         app:layout_constraintStart_toEndOf="@+id/btnGoogle"
         app:layout_constraintTop_toTopOf="@+id/btnGoogle" />
 
-
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>
