@@ -1,5 +1,7 @@
 package com.app.mirrorsensei.UtilMax;
 
+import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -19,6 +21,8 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Size;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -31,6 +35,7 @@ import android.widget.Toast;
 //import com.google.android.gms.tasks.OnCompleteListener;
 //import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 //import com.google.firebase.auth.AuthCredential;
@@ -64,8 +69,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 //import io.realm.Realm;
 //import io.realm.RealmConfiguration;
@@ -139,6 +153,7 @@ public final class utilmax {
     }
 
     public static void DESTROY() {
+        destroyCamera();
 //        destroyRealm();
     }
 
@@ -536,6 +551,7 @@ public final class utilmax {
 */
     /** VIBRATOR */
     //(max amplitude = 255)
+    //<uses-permission android:name="android.permission.VIBRATE" />
     private static Vibrator vibrator;
 
     private static void init_Vibrator() {
@@ -826,22 +842,99 @@ public final class utilmax {
     }
 
     /** CAMERA + FLASH */
-    //TODO camera
+    //camera permission includes flashlight permission
+    //<uses-feature android:name="android.hardware.camera.any" />
+    //<uses-permission android:name="android.permission.CAMERA" />
+
+    // (11-1-2022)
+    // To start analyzing image, need to feed Analyzer to ImageAnalysis, hopefully after starting camera
+    // To stop analyzing, need to clearAnalyzer() from ImageAnalysis
+    // To show on screen, need to feed "Preview" class object to camera, with previewView element
+
+    //permission part
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 14;
+    //camera part
+    private static ProcessCameraProvider cameraProvider;
+    //flashlight part
     private static CameraManager cameraManager;
     private static String flashlightID;
     private static boolean flashOnNow = false;
+    //template part
+    public static ImageAnalysis templateImageAnalysis;
 
     private static void init_Camera() {
+        //permission part
+        if (ContextCompat.checkSelfPermission(APP_CONTEXT, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(CURR_ACTIVITY, new String[]{Manifest.permission.CAMERA},CAMERA_PERMISSION_REQUEST_CODE);
+        }
+        //camera part
+        ProcessCameraProvider.getInstance(APP_CONTEXT).addListener(() -> {
+            try {
+                cameraProvider = ProcessCameraProvider.getInstance(APP_CONTEXT).get();
+                log("cameraProvider set-ed");
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }, ContextCompat.getMainExecutor(APP_CONTEXT));
+        //flashlight part
         cameraManager = (CameraManager) APP_CONTEXT.getSystemService(Context.CAMERA_SERVICE);
         try {
             if (APP_CONTEXT.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                 flashlightID = cameraManager.getCameraIdList()[0];
             } else {
-                makeToast("no flashlight on this device");
+                log("no flashlight on this device");
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+        //template part
+        templateImageAnalysis = new ImageAnalysis.Builder()
+                .setTargetResolution(new Size(720,1280))
+                .setOutputImageRotationEnabled(true)
+                .setTargetRotation(Surface.ROTATION_0)
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                .build();
+    }
+
+    private static void destroyCamera(){
+        stopCamera();
+    }
+
+    public static ImageAnalysis startCamera(ImageAnalysis imageAnalysis, Preview previewView){
+        if (cameraProvider==null){
+            log("no cameraProvider");
+            return imageAnalysis;
+        }
+        if (imageAnalysis==null && previewView==null){return null;}
+        stopCamera();
+        log("start camera");
+        if (imageAnalysis==null){
+            cameraProvider.bindToLifecycle(
+                    CURR_ACTIVITY,
+                    new CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build(),
+                    previewView
+            );
+        } else if (previewView==null){
+            cameraProvider.bindToLifecycle(
+                    CURR_ACTIVITY,
+                    new CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build(),
+                    imageAnalysis
+            );
+        } else {
+            cameraProvider.bindToLifecycle(
+                    CURR_ACTIVITY,
+                    new CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build(),
+                    imageAnalysis,
+                    previewView
+            );
+        }
+        return imageAnalysis;
+    }
+
+    public static void stopCamera(){
+        if (cameraProvider==null){return;}
+        log("stop camera");
+        cameraProvider.unbindAll();
     }
 
     public static void makeFlash(boolean set_to_on) {
@@ -1398,7 +1491,7 @@ public final class utilmax {
             int ipAdr = wifiInfo.getIpAddress();    //local ip only
             String ip = String.format("IP Adrress : %02d.%02d.%02d.%02d", (ipAdr >> 0) & 0xff, (ipAdr >> 8) & 0xff, (ipAdr >> 16) & 0xff, (ipAdr >> 24) & 0xff);
             log(ip);
-            log("MAC addr " + wifiInfo.getMacAddress());
+//            log("MAC addr " + wifiInfo.getMacAddress());
             log("Link speed " + wifiInfo.getLinkSpeed() + WifiInfo.LINK_SPEED_UNITS);
             log("Network ID " + wifiInfo.getNetworkId());
             log("Signal level " + WifiManager.calculateSignalLevel(wifiInfo.getRssi(), 1000));
