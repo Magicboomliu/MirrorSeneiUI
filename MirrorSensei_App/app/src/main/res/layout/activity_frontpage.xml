@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@+id/customer_service"
         app:srcCompat="@android:drawable/ic_dialog_dialer"
         tools:ignore="SpeakableTextPresentCheck" />
-
+<!--
     <ImageButton
         android:id="@+id/bluetooth_mainscreen"
         android:layout_width="48dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/stat_sys_data_bluetooth"
         tools:ignore="SpeakableTextPresentCheck" />
-
+-->
     <ImageButton
         android:id="@+id/message_mainscreen"
         android:layout_width="wrap_content"
@@ -193,5 +193,16 @@
         app:layout_constraintBottom_toTopOf="@+id/search"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/mirror_logo" />
+
+    <TextView
+        android:id="@+id/currUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="36dp"
+        android:textSize="20sp"
+        android:text="Press here to sign in"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

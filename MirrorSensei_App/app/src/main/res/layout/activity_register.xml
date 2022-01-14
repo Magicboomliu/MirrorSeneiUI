@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
-    <!--
+    android:background="@drawable/background"
     android:paddingLeft="20dp"
     android:paddingTop="10dp"
     android:paddingRight="10dp"
     android:paddingBottom="10dp"
-    tools:context=".RegisterActivity">
+    tools:context="com.app.mirrorsensei.RegisterActivity">
 
     <TextView
         android:id="@+id/logo"
@@ -137,5 +136,5 @@
         app:layout_constraintEnd_toEndOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="@+id/btnRegister"
         app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
-        -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
