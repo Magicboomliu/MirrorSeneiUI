@@ -48,10 +48,10 @@ public final class utilmaxMS {
         public enum FILE_STRUCTURE_USERLIST {userName, userPassword}
     }
     public static class UserFS{
-        public String userName, userGender, learningTarget, currLevel, subjectCategory, progress;
+        public String userName, userEmail, userGender, learningTarget, currLevel, subjectCategory, progress;
         public int userAge, totalLearningDays, initialLevel;
         public UserFS(){}
-        public enum FILE_STRUCTURE_USER {userName, userAge, userGender, learningTarget, currLevel,
+        public enum FILE_STRUCTURE_USER {userName, userEmail, userAge, userGender, learningTarget, currLevel,
                                         totalLearningDays, subjectCategory, initialLevel, progress}
     }
     public static class MotionCS{
@@ -92,7 +92,7 @@ public final class utilmaxMS {
         return name;
     }
     public static void accountSignOut(){currUser = null;}
-    public static boolean accountSignUp(String name, String pwd, int age, String gender){
+    public static boolean accountSignUp(String name, String pwd, String email, int age, String gender){
         UserListFS userList = APP_FILE_LIST.userList.load(UserListFS.class);
         if (userList.userList.containsKey(name)){return false;}
         //save in userList
@@ -101,6 +101,7 @@ public final class utilmaxMS {
         //make new UserFS
         UserFS newUser = new UserFS();
         newUser.userName = name;
+        newUser.userEmail = email;
         newUser.userAge = age;
         newUser.userGender = gender;
         newUser.learningTarget = "Not set";
