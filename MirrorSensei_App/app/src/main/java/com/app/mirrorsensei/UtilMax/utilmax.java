@@ -47,7 +47,7 @@ import com.google.gson.GsonBuilder;
 //import com.max.memo3.Background.MEMO3_BroadcastReceiver;
 //import com.max.memo3.Background.MEMO3_Service;
 //import com.max.memo3.Confidential.Conf_Info;
-//import com.max.memo3.MainActivity;
+//import com.max.memo3.NotSoMainActivity;
 //import com.max.memo3.R;
 //import com.max.memo3.TestSubject.Test7_Background;
 

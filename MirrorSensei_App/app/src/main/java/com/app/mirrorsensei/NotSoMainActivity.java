@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.app.mirrorsensei.UtilMax.utilmax;
 import com.app.mirrorsensei.UtilMax.utilmaxMS;
 
-public class MainActivity extends AppCompatActivity {
+public class NotSoMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
