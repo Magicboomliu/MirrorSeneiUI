@@ -75,6 +75,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
         app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
@@ -85,6 +86,7 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/btn_bg"
         android:text="Login"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
         app:layout_constraintStart_toStartOf="@+id/inputPassword"
         app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
@@ -113,6 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Up"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:textColor="@color/colorRed" />
 
 
@@ -129,6 +132,7 @@
         android:drawablePadding="10dp"
         android:text="Google"
         android:textAllCaps="false"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnFacebook"
         app:layout_constraintHorizontal_bias="0.5"
@@ -147,6 +151,7 @@
         android:drawablePadding="10dp"
         android:text="Facebook"
         android:textAllCaps="false"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/btnGoogle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

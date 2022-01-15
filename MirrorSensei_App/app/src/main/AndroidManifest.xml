@@ -18,20 +18,20 @@
             android:exported="false" />
         <activity
             android:name=".MainFrontPage"
-            android:exported="false" />
-        <activity
-            android:name=".MaxActivityTest"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MaxActivityTest"
+            android:exported="false"
+            android:parentActivityName=".NotSoMainActivity" />
+        <activity
+            android:name=".NotSoMainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
