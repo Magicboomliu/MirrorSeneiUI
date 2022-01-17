@@ -212,4 +212,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/Mainscreen_continue"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="140dp"
+        android:background="#F0DEF3"
+        app:layout_constraintBottom_toTopOf="@+id/customer_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_myplaces"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
