@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 import math
 
-from sympy import E
+from sympy import E, re
 
 
 def get_2d(pixel_coord_instance):
@@ -185,11 +185,15 @@ def is_angle_wrong(p3d_r, p3d_q, mode='elbow_left', threshold=30):
 
 
 def draw_wrong_angle(image_q, p3d_r, p3d_q, p2d_q, mode='elbow_left', threshold=30):
+    if (len(p3d_q) ==0 or len(p3d_r)==0 or len(p2d_q)==0):
+        return image_q
     j1, j2, j3 = joint_point[mode][1], joint_point[mode][0], joint_point[mode][2]
     is_wrong = is_angle_wrong(p3d_r, p3d_q, mode, threshold)
     if is_wrong == 0:
         return image_q
     elif is_wrong == 1:
+        if len(p2d_q)<j1:
+            return image_q
         u, v = get_2d(p2d_q[j1])
         vis = p2d_q[j1][-1]
         if vis > 0.5:
@@ -198,6 +202,8 @@ def draw_wrong_angle(image_q, p3d_r, p3d_q, p2d_q, mode='elbow_left', threshold=
             draw_line_2d(image_q, p2d_q, j1, j3, (0, 0, 255))
             cv2.putText(image_q, 'big', (u+5, v), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 127, 255), 2)
     elif is_wrong == -1:
+        if len(p2d_q)<j1:
+            return image_q
         u, v = get_2d(p2d_q[j1])
         vis = p2d_q[j1][-1]
         if vis > 0.5:
