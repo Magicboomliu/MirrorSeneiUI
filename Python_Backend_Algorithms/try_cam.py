@@ -6,7 +6,7 @@ if __name__ == "__main__":
     pose_model = PoseDetector(mode=False, min_detection_confidence=0.5, min_track_confidence=0.5)
 
     # Camera capture
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     # camera open
     while cap.isOpened():
         ret, frame = cap.read()

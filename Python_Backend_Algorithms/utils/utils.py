@@ -7,6 +7,8 @@ import cv2
 import numpy as np
 import math
 
+from sympy import E
+
 
 def get_2d(pixel_coord_instance):
     # u, v
@@ -109,8 +111,8 @@ def angle_computation(p1, p2, p3):
     f1 = p2 - p1
     f2 = p2 - p3
 
-    p1p2_norm = f1 / np.linalg.norm(f1)
-    p2p3_norm = f2 / np.linalg.norm(f2)
+    p1p2_norm = f1 / (np.linalg.norm(f1)+1e-10)
+    p2p3_norm = f2 / (np.linalg.norm(f2)+1e-10)
 
     res = np.dot(p1p2_norm, p2p3_norm)
 
@@ -164,7 +166,16 @@ def show_predefined_angles(p3d, mode='elbow_left'):
 def is_angle_wrong(p3d_r, p3d_q, mode='elbow_left', threshold=30):
     angle_r = show_predefined_angles(p3d_r, mode)
     angle_q = show_predefined_angles(p3d_q, mode)
+    
+
+    if angle_r==None:
+        angle_r =0
+    if angle_q ==None:
+        angle_q =0
     diff_angle = angle_q - angle_r
+
+
+
     if diff_angle > threshold:
         return 1
     elif diff_angle < -threshold:
@@ -213,9 +224,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u + 5, v), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.2)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+   
 
     elif mode == 'elbow_right':
         u, v = get_2d(p2d[13])
@@ -224,9 +233,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u + 5, v), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.25)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'chest_upper_left':
         u, v = get_2d(p2d[12])
@@ -235,9 +242,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u - 5, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.30)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'chest_upper_right':
         u, v = get_2d(p2d[11])
@@ -246,9 +251,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u - 5, v - 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.35)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'chest_bottom_left':
         u, v = get_2d(p2d[24])
@@ -257,9 +260,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u + 5, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.40)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'chest_bottom_right':
         u, v = get_2d(p2d[23])
@@ -268,9 +269,6 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u + 5, v - 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.45)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
 
     elif mode == 'left_big_leg_angle':
         u, v = get_2d(p2d[24])
@@ -279,9 +277,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u - 5, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.50)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'right_big_leg_angle':
         u, v = get_2d(p2d[23])
@@ -290,9 +286,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u - 5, v - 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.55)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'left_knee_angle':
         u, v = get_2d(p2d[26])
@@ -301,9 +295,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.60)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'right_knee_angle':
         u, v = get_2d(p2d[25])
@@ -312,9 +304,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u, v - 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.65)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'left_foot_angle':
         u, v = get_2d(p2d[28])
@@ -323,9 +313,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u, v - 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.70)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'right_foot_angle':
         u, v = get_2d(p2d[27])
@@ -334,9 +322,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.75)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'hip_left':
         u, v = get_2d(p2d[24])
@@ -345,9 +331,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u + 5, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.80)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'hip_right':
         u, v = get_2d(p2d[23])
@@ -356,9 +340,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u + 5, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.85)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'armpit_left':
         u, v = get_2d(p2d[12])
@@ -367,9 +349,7 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u - 5, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.40)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
+
 
     elif mode == 'armpit_right':
         u, v = get_2d(p2d[11])
@@ -378,9 +358,6 @@ def draw_angles(image, p3d, p2d, h, w, mode='elbow_left', draw_mode=0):
             if draw_mode == 0:
                 cv2.putText(image, str(int(angle)), (u - 5, v + 5), cv2.FONT_HERSHEY_PLAIN, 1.5,
                             (0, 0, 255), 2)
-                cv2.putText(image, mode + ": " + str(int(angle)), (int(w * 0.01), int(h * 0.45)),
-                            cv2.FONT_HERSHEY_PLAIN, 1,
-                            (0, 255, 0), 1)
 
     return image
 
