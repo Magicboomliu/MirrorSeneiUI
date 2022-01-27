@@ -1,4 +1,5 @@
 from os import stat
+from random import sample
 from tkinter import *
 from PIL import Image,ImageTk
 import cv2
@@ -15,6 +16,7 @@ from utils.utils import is_angle_wrong, draw_wrong_angle, get_2d, get_3d,motion_
 
 import time
 from tkinter.filedialog import askopenfilename
+
 def center_window(w, h):
     # 获取屏幕 宽、高
     ws = root.winfo_screenwidth()
@@ -23,6 +25,7 @@ def center_window(w, h):
     x = (ws/2) - (w/2)
     y = (hs/2) - (h/2)
     root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+
 
 
 def feedback_face(render_image,type,H,W):
@@ -118,16 +121,19 @@ def video_loop():
     success, img = camera.read()  # 从摄像头读取照片
     if success:
         cv2.waitKey(10)
+        
+        H,W = img.shape[:2]
+
+        # img = img[100:1280-350,:,:]
+        img = img[100:1280-150,:,:]
+
 
         img = ShowLogo(MSLogoData,img)
 
 
-        H,W = img.shape[:2]
 
         reference_data = np.array(ImageTk.getimage(referenceView.imtk))
      
-    
-
         # For reference Image data result
         reference_results, h_r, w_r = pose_model_1.get_the_landmark(reference_data)
         # Get pixel(2d), scene(3d) coordinate
@@ -194,6 +200,8 @@ def initial(type):
         image_path ="demo_res/video_test/5.png"
     
     NewReferenceData = cv2.imread(image_path)
+    if type==5:
+        NewReferenceData = cv2.flip(NewReferenceData,1)
     NewReferenceData = cv2.resize(NewReferenceData,(300,200))
     cv2.putText(NewReferenceData,'Yoga standard motion {}'.format(type),(55,195),cv2.FONT_HERSHEY_COMPLEX,0.5,(255,0,0),1)
     NewReferenceData = cv2.cvtColor(NewReferenceData, cv2.COLOR_BGR2RGBA)#转换颜色从BGR到RGBA
@@ -207,6 +215,14 @@ def initial(type):
 
 
 if __name__ =="__main__":
+
+    sample1 = 'demo_res/video_test/1_2.mp4'
+    sample2 = 'demo_res/video_test/2_3.mp4'
+    sample3 = 'demo_res/video_test/3_4.mp4'
+    sample4 = 'demo_res/video_test/4-5.mp4'
+    sample5 = 'demo_res/video_test/5-6.mp4'
+
+
     
     
 
@@ -227,7 +243,9 @@ if __name__ =="__main__":
     root = Tk()
     root.title("MirrorSensei")
     root.configure(bg='white')
-    center_window(600,700)
+
+
+    center_window(600, 700)
     # root.geometry("600x700")
     path = StringVar()
 
@@ -285,7 +303,7 @@ if __name__ =="__main__":
   
     CameraView.pack(side=RIGHT, fill=Y, expand=YES)
     
-    camera = cv2.VideoCapture(0)    #摄像头
+    camera = cv2.VideoCapture(sample4)    #摄像头
 
     
     
@@ -320,16 +338,7 @@ if __name__ =="__main__":
 
   
 
-
-
     root.mainloop()
 
     camera.release()
     cv2.destroyAllWindows()
-
-
-
-
-    
-    
-    

@@ -16,4 +16,10 @@ MirrorSensei is a smart Android application with motion analysis and AR feedback
 
 ### This Mirror Sensei is both implemented at Andorid and Windows(Pyinstaller) and Linux (source code) 
 #### See the release Page of this repo(Both Andorid and PC):
-https://github.com/Magicboomliu/MirrorSeneiUI/releases
+https://github.com/Magicboomliu/MirrorSeneiUI/releases 
+
+
+### PC demo :  
+
+* Youtube: https://youtu.be/xVImYtETXBQ 
+* Bilibili: https://www.bilibili.com/video/BV1tL4y1t76o/

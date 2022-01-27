@@ -377,14 +377,21 @@ def motion_similarity(coord_ref, coord_query, neighbour_dir, idx_list,predefine_
 
     angle_mode_dict = dict()
     is_correct = True
-    if mode==0:
-        for joint_name in predefine_angle_list:
-            angle_mode = is_angle_wrong(coord_ref,coord_query,mode=joint_name,threshold=threshold)
-            if angle_mode !=0:
-                is_correct = False
-            angle_mode_dict[joint_name] = angle_mode
-    else:
+    for joint_name in predefine_angle_list:
+        angle_mode = is_angle_wrong(coord_ref,coord_query,mode=joint_name,threshold=threshold)
+        if angle_mode !=0:
+            is_correct = False
+        angle_mode_dict[joint_name] = angle_mode
+    if mode ==1:
         is_correct = False
+    # if mode==0:
+    #     for joint_name in predefine_angle_list:
+    #         angle_mode = is_angle_wrong(coord_ref,coord_query,mode=joint_name,threshold=threshold)
+    #         if angle_mode !=0:
+    #             is_correct = False
+    #         angle_mode_dict[joint_name] = angle_mode
+    # else:
+    #     is_correct = False
 
     return  is_correct, angle_mode_dict
 
