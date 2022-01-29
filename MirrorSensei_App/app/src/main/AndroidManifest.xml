@@ -8,30 +8,30 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/mirror_sensei_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/mirror_sensei_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MirrorSensei">
         <activity
-            android:name=".MainActivity3"
+            android:name=".ActivityMotionAnalysis"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".MaxActivityTest"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".MainFrontPage"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MaxActivityTest"
+            android:exported="false"
+            android:parentActivityName=".NotSoMainActivity" />
+        <activity
+            android:name=".NotSoMainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
