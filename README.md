@@ -12,7 +12,12 @@ MirrorSensei is a smart Android application with motion analysis and AR feedback
 * meidiapipe 
 * Android Studio 
 * Tkinter  
-* Google ML -kit  
+* Google ML -kit    
+
+### How can I run Mirror Sensei on Linux?  
+`git clone https://github.com/Magicboomliu/MirrorSeneiUI.git`  
+`cd .\Python_Backend_Algorithms\`  
+` python .\tryTkinter.py ` 
 
 ### This Mirror Sensei is both implemented at Andorid and Windows(Pyinstaller) and Linux (source code) 
 #### See the release Page of this repo(Both Andorid and PC):
