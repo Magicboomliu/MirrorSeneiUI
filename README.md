@@ -22,4 +22,7 @@ https://github.com/Magicboomliu/MirrorSeneiUI/releases
 ### PC demo :  
 
 * Youtube: https://youtu.be/xVImYtETXBQ 
-* Bilibili: https://www.bilibili.com/video/BV1tL4y1t76o/
+* Bilibili: https://www.bilibili.com/video/BV1tL4y1t76o/   
+
+### You can fillin the feedback formm here to help use improve Mirror Sensei. 
+https://docs.google.com/forms/d/e/1FAIpQLSeRcqAtxV6kbQntZmperg3Q1hYkV4OOz4KzBLA3aQGifOEIKw/viewform?usp=sf_link
