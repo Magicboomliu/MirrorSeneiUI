@@ -68,18 +68,18 @@ public class MaxActivityTest extends AppCompatActivity {
 //            cameraProvider.unbindAll();
         });
         findViewById(R.id.maxtestactivity_enable).setOnClickListener(v -> {
-//            utilmax.log("start analyzing");
-//            isImageTaken = false;
-//            imageAnalysis.setAnalyzer(executorService, imageProxy -> {
-////                if (!isImageTaken) {
-//                    utilmax.log("image taken");
-//                    utilmax.log("height" + imageProxy.getHeight());
-//                    utilmax.log("width" + imageProxy.getWidth());
-//                    utilmax.log("rotation angle" + imageProxy.getImageInfo().getRotationDegrees());
-//                    isImageTaken = true;
-////                }
-//                imageProxy.close();
-//            });
+            utilmax.log("start analyzing");
+            isImageTaken = false;
+            imageAnalysis.setAnalyzer(executorService, imageProxy -> {
+//                if (!isImageTaken) {
+                    utilmax.log("image taken");
+                    utilmax.log("height" + imageProxy.getHeight());
+                    utilmax.log("width" + imageProxy.getWidth());
+                    utilmax.log("rotation angle" + imageProxy.getImageInfo().getRotationDegrees());
+                    isImageTaken = true;
+//                }
+                imageProxy.close();
+            });
         });
         findViewById(R.id.maxtestactivity_disable).setOnClickListener(v -> {
 //            imageAnalysis.clearAnalyzer();

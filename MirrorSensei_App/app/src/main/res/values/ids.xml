@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="all_apps_mainscreen" type="id">all_apps_mainscreen</item>
-    <item name="customer_service" type="id">customer_service</item>
-    <item name="bluetooth_mainscreen" type="id">bluetooth_mainscreen</item>
-    <item name="message_mainscreen" type="id">message_mainscreen</item>
-    <item name="camera_mainscreen" type="id">camera_mainscreen</item>
-    <item name="search" type="id">search</item>
-    <item name="mirror_logo" type="id">mirroe_logo</item>
+    <item name="all_apps_mainscreen" type="id"/>
+    <item name="customer_service" type="id"/>
+    <item name="bluetooth_mainscreen" type="id"/>
+    <item name="message_mainscreen" type="id"/>
+    <item name="camera_mainscreen" type="id"/>
+    <item name="search" type="id"/>
+    <item name="mirror_logo" type="id"/>
 </resources>

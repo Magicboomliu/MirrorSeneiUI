@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.app.mirrorsensei.UtilMax.utilmax;
 import com.app.mirrorsensei.UtilMax.utilmaxMS;
 
-public class MainActivity extends AppCompatActivity {
+public class NotSoMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_to_maxtestactivity).setOnClickListener(view -> {
             Intent intent = new Intent(this,MaxActivityTest.class);
             startActivity(intent);
+        });
+        findViewById(R.id.button_to_frontpage).setOnClickListener(view -> {
+            startActivity(new Intent(this,MainFrontPage.class));
         });
     }
 }
