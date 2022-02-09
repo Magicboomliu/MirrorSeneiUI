@@ -44,7 +44,7 @@ public class MaxActivityTest extends AppCompatActivity {
         utilmax.setCurrActivity(this);
 
         //Camera test
-//        testCameraOnStart();
+        testCameraOnStart();
 
         //set button onClick
         findViewById(R.id.maxtestactivity_button1).setOnClickListener(v -> {
@@ -84,6 +84,27 @@ public class MaxActivityTest extends AppCompatActivity {
         findViewById(R.id.maxtestactivity_disable).setOnClickListener(v -> {
 //            imageAnalysis.clearAnalyzer();
 //            utilmax.log("clear analyzer");
+        });
+        binding.cameraToResult.setOnClickListener(view -> {
+            cameraProvider.unbindAll();
+            startActivity(new Intent(utilmax.CURR_CONTEXT,ResultActivity.class));
+        });
+
+        //start camera
+        if (cameraProvider != null){
+            testCameraBindPreview(cameraProvider);
+        }
+        utilmax.log("start analyzing");
+        isImageTaken = false;
+        imageAnalysis.setAnalyzer(executorService, imageProxy -> {
+//        if (!isImageTaken) {
+            utilmax.log("image taken");
+            utilmax.log("height" + imageProxy.getHeight());
+            utilmax.log("width" + imageProxy.getWidth());
+            utilmax.log("rotation angle" + imageProxy.getImageInfo().getRotationDegrees());
+            isImageTaken = true;
+//        }
+            imageProxy.close();
         });
     }
 

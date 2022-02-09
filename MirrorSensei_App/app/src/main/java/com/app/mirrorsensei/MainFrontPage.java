@@ -45,7 +45,10 @@ public class MainFrontPage extends AppCompatActivity {
             utilmax.startSharingSharesheet(intent,"Share current learning topic to:");
         });
         binding.tutorialMainscreen.setOnClickListener(view -> {
-            utilmax.log("for starting new course");
+            startActivity(new Intent(utilmax.CURR_CONTEXT,RecommendationActivity.class));
+        });
+        binding.MainscreenContinue.setOnClickListener(view -> {
+            startActivity(new Intent(utilmax.CURR_CONTEXT,RecommendationActivity.class));
         });
         //set button onClick for buttons that won't be used
         binding.ARFeedbackMainscreen.setOnClickListener(view -> utilmax.makeToast("Intended for AR feedback. Not implemented right now."));

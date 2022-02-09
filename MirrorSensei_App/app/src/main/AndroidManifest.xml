@@ -28,10 +28,25 @@
         <activity
             android:name=".MaxActivityTest"
             android:exported="false"
-            android:parentActivityName=".NotSoMainActivity" />
+            android:parentActivityName=".RecommendationActivity" />
         <activity
             android:name=".NotSoMainActivity"
             android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecommendationActivity"
+            android:exported="false"
+            android:parentActivityName=".MainFrontPage"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity android:name=".ResultActivity" android:exported="false" android:parentActivityName=".MaxActivityTest"/>
+        <activity android:name=".ChartBar" android:exported="false" android:parentActivityName=".ResultActivity"/>
+        <activity android:name=".ChartLine" android:exported="false" android:parentActivityName=".ResultActivity"/>
+        <activity android:name=".ChartPie" android:exported="false" android:parentActivityName=".ResultActivity"/>
+        <activity android:name=".ChartRader" android:exported="false" android:parentActivityName=".ResultActivity"/>
     </application>
 
 </manifest>
